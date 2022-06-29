@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.raphadrummond.soccernews.databinding.NewsItemBinding;
 import com.raphadrummond.soccernews.domain.News;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,19 +22,22 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        LayoutInflater LayoutInflater = android.view.LayoutInflater.from(parent.getContext());
         NewsItemBinding binding = NewsItemBinding.inflate(LayoutInflater, parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position){
+        News news = this.news.get(position);
+        holder.binding.tvTitle.setText(news.getTitle());
+        holder.binding.tvDescirption.setText(news.getDescription());
+        Picasso.get().load(news.getImage()).into(holder.binding.ivThumbnail);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return this.news.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
